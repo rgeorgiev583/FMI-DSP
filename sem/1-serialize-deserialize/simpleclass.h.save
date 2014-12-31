@@ -1,0 +1,20 @@
+#ifndef SIMPLECLASS_H
+#define SIMPLECLASS_H
+#include "serializable.h"
+
+class SimpleClass : public Serializable
+{
+public:
+    int iProp, *arriProp;
+    float fProp, *arrfProp;
+    char cProp,;
+
+    SimpleClass();
+    SimpleClass(int, float, char);
+
+    void serialize(const char* fname);
+    void deserialize(const char* fname);
+};
+
+#endif
+/home/radoslav/prog/cpp/uni/dsp/sem/1-serialize-deserialize/SerializationDeserialization2/SerializationDeserialization2.cbp

@@ -1,0 +1,72 @@
+# depslib dependency file v1.0
+1414399736 source:/home/radoslav/prog/cpp/uni/dsp/practice/4/stack.cpp
+	<cstddef>
+	"stack.h"
+
+1414398176 /home/radoslav/prog/cpp/uni/dsp/practice/4/stack.h
+	<cstddef>
+
+1414399676 source:/home/radoslav/prog/cpp/uni/dsp/practice/4/main.cpp
+	<iostream>
+	"stack.cpp"
+
+1414399736 /home/radoslav/prog/cpp/uni/dsp/practice/4/stack.cpp
+	<cstddef>
+	"stack.h"
+
+1414399736 source:/home/radoslav/prog/cpp/uni/dsp/practice/4/Stack/stack.cpp
+	<cstddef>
+	"stack.h"
+
+1414400057 /home/radoslav/prog/cpp/uni/dsp/practice/4/Stack/stack.h
+	<cstddef>
+
+1414403643 source:/home/radoslav/prog/cpp/uni/dsp/practice/4/Stack/main.cpp
+	<iostream>
+	"stack.cpp"
+	"queue.cpp"
+
+1414399736 /home/radoslav/prog/cpp/uni/dsp/practice/4/Stack/stack.cpp
+	<cstddef>
+	"stack.h"
+
+1414403729 source:/home/radoslav/prog/cpp/uni/dsp/practice/4/Stack/queue.cpp
+	<cstddef>
+	"queue.h"
+
+1414403736 /home/radoslav/prog/cpp/uni/dsp/practice/4/Stack/queue.h
+	"stack.h"
+
+1414403729 /home/radoslav/prog/cpp/uni/dsp/practice/4/Stack/queue.cpp
+	<cstddef>
+	"queue.h"
+
+1414505387 source:/home/radoslav/prog/cpp/uni/dsp/sem/3/Stack/main.cpp
+	<iostream>
+	<cstring>
+	<stack>
+	"stack.cpp"
+	"queue.cpp"
+
+1414497389 /home/radoslav/prog/cpp/uni/dsp/sem/3/Stack/stack.cpp
+	<cstddef>
+	"stack.h"
+
+1414497350 /home/radoslav/prog/cpp/uni/dsp/sem/3/Stack/stack.h
+	<cstddef>
+
+1414500045 /home/radoslav/prog/cpp/uni/dsp/sem/3/Stack/queue.cpp
+	<cstddef>
+	"queue.h"
+
+1414495948 /home/radoslav/prog/cpp/uni/dsp/sem/3/Stack/queue.h
+	"stack.h"
+
+1414500045 source:/home/radoslav/prog/cpp/uni/dsp/sem/3/Stack/queue.cpp
+	<cstddef>
+	"queue.h"
+
+1414497389 source:/home/radoslav/prog/cpp/uni/dsp/sem/3/Stack/stack.cpp
+	<cstddef>
+	"stack.h"
+

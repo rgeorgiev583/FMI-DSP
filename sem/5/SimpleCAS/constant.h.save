@@ -1,0 +1,6 @@
+#ifndef CONSTANT_H_INCLUDED
+#define CONSTANT_H_INCLUDED
+
+class Constant
+
+#endif // CONSTANT_H_INCLUDED

@@ -1,0 +1,38 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int main()
+{
+    queue<int> q;
+    int n;
+    
+    do
+    {
+        cin >> n;
+        q.push(n);
+    }
+    while (n);
+    
+    queue<int> qo, qe;
+    
+    while (!q.empty())
+    {
+        int t = q.top();
+        (t % 2) ? qo.push(t) : qe.push(t);
+    }
+    
+    while (!qe.empty())
+    {
+        cout << qe.top() << endl;
+        qe.pop();
+    }
+    
+    while (!qo.empty())
+    {
+        cout << qe.top() << endl;
+        qe.pop();
+    }
+    
+    return 0;
+}

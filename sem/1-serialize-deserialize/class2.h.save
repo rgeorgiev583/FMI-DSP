@@ -1,0 +1,6 @@
+#ifndef CLASS2_H_INCLUDED
+#define CLASS2_H_INCLUDED
+
+
+
+#endif // CLASS2_H_INCLUDED
