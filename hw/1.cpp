@@ -44,12 +44,14 @@ int main()
     stack<size_t> sr;
     pour(sr, s);
     qs.push(sr);
+    qs.push(stack<size_t>()); // sentinel stack
+
     s = qs.front();
     qs.pop();
 
     queue<stack<size_t> > qsm;
 
-    while (!qs.empty())
+    while (!qs.front().empty())
     {
         stack<size_t> sn = qs.front(), sc = sn, sr;
         
