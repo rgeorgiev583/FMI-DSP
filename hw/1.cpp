@@ -1,5 +1,5 @@
 #include <iostream>
-#include <stack>
+#include "stack.h"
 #include <queue>
 
 using namespace std;
@@ -34,7 +34,7 @@ int main()
             stack<size_t> sr;
             pour(sr, s);
             qs.push(sr);
-            s = stack<size_t>();
+            destroy(s);
         }
 
         s.push(dn);
@@ -44,46 +44,48 @@ int main()
     stack<size_t> sr;
     pour(sr, s);
     qs.push(sr);
-    qs.push(stack<size_t>()); // sentinel stack
+    destroy(s);
 
-    s = qs.front();
-    qs.pop();
+    size_t fixed_stack_count = 0;
+    bool was_stack_moved = false;
 
-    queue<stack<size_t> > qsm;
-
-    while (!qs.front().empty())
+    while (fixed_stack_count < qs.size())
     {
-        stack<size_t> sn = qs.front(), sc = sn, sr;
-        
-        while (!sc.empty())
-        {
-            sr.push(sc.top());
-            sc.pop();
-        }
+        stack<size_t> sn;
+        copy(sn, qs.front());
 
-        if (sr.top() < s.top())
-            while (!sr.empty())
+        if (sn.empty())
+            if (was_stack_moved)
+                was_stack_moved = false;
+            else
             {
-                s.push(sr.top());
-                sr.pop();
+                qs.push(s);
+                destroy(s);
+                fixed_stack_count++;
             }
+        else if (s.empty())
+        {
+            pour(s, sn);
+            qs.push(stack<size_t>()); // sentinel stack
+        }
         else
         {
-            qsm.push(s);
-            s = sn;
+            if (sn.top() > s.top())
+                pour(sn, s);
+
+            qs.push(sn);
         }
 
         qs.pop();
     }
 
-    qsm.push(s);
-    d = 1;
+    size_t i = 1;
 
-    while (!qsm.empty())
+    while (!qs.empty())
     {
-        cout << "Купчина " << d << ": ";
+        cout << "Купчина " << i << ": ";
 
-        stack<size_t> sn = qsm.front();
+        stack<size_t> sn = qs.front();
 
         while (!sn.empty())
         {
@@ -92,8 +94,8 @@ int main()
         }
 
         cout << endl;
-        d++;
-        qsm.pop();
+        i++;
+        qs.pop();
     }
 
     return 0;
