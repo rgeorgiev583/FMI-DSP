@@ -4,6 +4,28 @@
 
 using namespace std;
 
+void print(queue<stack<size_t> > qs)
+{
+    size_t i = 1;
+
+    while (!qs.empty())
+    {
+        cout << "Купчина " << i << ": ";
+
+        stack<size_t> sn = qs.front();
+
+        while (!sn.empty())
+        {
+            cout << sn.top() << " ";
+            sn.pop();
+        }
+
+        cout << endl;
+        i++;
+        qs.pop();
+    }
+}
+
 int main()
 {
     queue<size_t> q;
@@ -54,15 +76,8 @@ int main()
         stack<size_t> sn;
         copy(sn, qs.front());
 
-        if (sn.empty())
-            if (was_stack_moved)
-                was_stack_moved = false;
-            else
-            {
-                qs.push(s);
-                destroy(s);
-                fixed_stack_count++;
-            }
+        if (sn.empty() && was_stack_moved)
+            was_stack_moved = false;
         else if (s.empty())
         {
             pour(s, sn);
@@ -70,8 +85,19 @@ int main()
         }
         else
         {
-            if (sn.top() > s.top())
+            if (sn.empty())
+                fixed_stack_count++;
+            else if (sn.top() > s.top())
+            {
+                was_stack_moved = true;
+                fixed_stack_count = 0;
+            }
+
+            if (sn.empty() || sn.top() > s.top())
+            {
                 pour(sn, s);
+                destroy(s);
+            }
 
             qs.push(sn);
         }
@@ -79,24 +105,7 @@ int main()
         qs.pop();
     }
 
-    size_t i = 1;
-
-    while (!qs.empty())
-    {
-        cout << "Купчина " << i << ": ";
-
-        stack<size_t> sn = qs.front();
-
-        while (!sn.empty())
-        {
-            cout << sn.top() << " ";
-            sn.pop();
-        }
-
-        cout << endl;
-        i++;
-        qs.pop();
-    }
+    print(qs);
 
     return 0;
 }
