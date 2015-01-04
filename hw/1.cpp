@@ -22,22 +22,28 @@ int main()
     queue<stack<size_t> > qs;
     stack<size_t> s;
 
+    s.push(q.front());
+    q.pop();
+
     while (!q.empty())
     {
         size_t dn = q.front();
 
-        if (s.empty() || dn < s.top())
-            s.push(dn);
-        else
+        if (s.top() > dn)
         {
-            qs.push(s);
+            stack<size_t> sr;
+            pour(sr, s);
+            qs.push(sr);
             s = stack<size_t>();
         }
 
+        s.push(dn);
         q.pop();
     }
 
-    qs.push(s);
+    stack<size_t> sr;
+    pour(sr, s);
+    qs.push(sr);
     s = qs.front();
     qs.pop();
 
