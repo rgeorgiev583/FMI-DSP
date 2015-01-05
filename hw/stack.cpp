@@ -1,6 +1,7 @@
-#include "stack.h"
+#include <stack>
 
-void pour(std::stack<std::size_t>& dest, std::stack<std::size_t> src)
+template <typename T>
+void pour(std::stack<T>& dest, std::stack<T> src)
 {
     while (!src.empty())
     {
@@ -9,14 +10,16 @@ void pour(std::stack<std::size_t>& dest, std::stack<std::size_t> src)
     }
 }
 
-void copy(std::stack<std::size_t>& dest, std::stack<std::size_t> src)
+template <typename T>
+void copy(std::stack<T>& dest, std::stack<T> src)
 {
-    std::stack<std::size_t> buff;
+    std::stack<T> buff;
     pour(buff, src);
     pour(dest, buff);
 }
 
-void destroy(std::stack<std::size_t>& s)
+template <typename T>
+void destroy(std::stack<T>& s)
 {
     while (!s.empty())
         s.pop();
