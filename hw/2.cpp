@@ -1,5 +1,5 @@
 #include <iostream>
-#include "stack.h"
+#include "stack.cpp"
 #include <queue>
 
 using namespace std;
