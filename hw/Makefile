@@ -1,15 +1,17 @@
-CC=g++
-CFLAGS=-I.
-OBJ = stack.o 1.cpp
+CC = g++
+CFLAGS = -I.
+SRC = $(wildcard *.cpp)
+OBJ = $(SRC:.cpp=.o)
+EXEC = 1 2
 
 %.o: %.cpp %.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-1: $(OBJ)
+$(EXEC): $(OBJ)
 	$(CC) $^ -o $@ $(CFLAGS)
 
 debug: CFLAGS += -g
-debug: 1
+debug: $(EXEC)
 
 clean:
-	rm -f *.o 1
+	rm -f $(OBJ) $(EXEC)
