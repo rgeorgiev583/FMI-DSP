@@ -18,7 +18,7 @@ public:
         l.back = NULL;
     }
 
-    bool attachAtBegin(DoubleLinkedList<T>& l, const I& it)
+    bool attachAtBegin(DoubleLinkedList<T>& l, I& it)
     {
         if (it)
         {
@@ -47,7 +47,7 @@ public:
             return false;
     }
 
-    bool attachAtEnd(DoubleLinkedList<T>& l, const I& it)
+    bool attachAtEnd(DoubleLinkedList<T>& l, I& it)
     {
         if (it)
         {
@@ -76,7 +76,7 @@ public:
             return false;
     }
 
-    bool attachAtPrev(DoubleLinkedList<T>& l, const I& it)
+    bool attachAtPrev(DoubleLinkedList<T>& l, I& it)
     {
         if (it && l.front && !l.front->prev)
         {
@@ -98,7 +98,7 @@ public:
             return false;
     }
 
-    void attachAtNext(DoubleLinkedList<T>& l, const I& it)
+    void attachAtNext(DoubleLinkedList<T>& l, I& it)
     {
         if (it && l.back && !l.back->next)
         {
