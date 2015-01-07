@@ -1,17 +1,23 @@
-CC = g++
-CFLAGS = -I.
-SRC = $(wildcard *.cpp)
-OBJ = $(SRC:.cpp=.o)
-EXEC = 1 2
+CC := g++
+CFLAGS := -I.
+SRCS := $(wildcard *.cpp)
+OBJS := $(SRCS:.cpp=.o)
+BINS := 1 2
 
-%.o: %.cpp %.h
-	$(CC) -c $< -o $@ $(CFLAGS)
-
-$(EXEC): $(OBJ)
-	$(CC) $^ -o $@ $(CFLAGS)
+all: $(BINS)
 
 debug: CFLAGS += -g
-debug: $(EXEC)
+debug: $(BINS)
+
+define EXEC
+
+$(1): $(OBJS)
+	$(CC) $^ -o $@ $(CFLAGS)
+
+endef
+
+%.o: %.cpp
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
-	rm -f $(OBJ) $(EXEC)
+	rm -f $(BINS) $(OBJS)
