@@ -4,27 +4,21 @@ template <typename T>
 class DoubleLinkedChain : public DoubleLinkedList<T>
 {
 public:
-    DoubleLinkedChain(): front(NULL), back(NULL) {}
+    DoubleListElement<T>* getFrontPtr() { return front; }
+    const DoubleListElement<T>* getFrontPtr() const { return front; }
 
-    DoubleLinkedChain(const DoubleLinkedList& l):
-            front(l.front), back(l.back), ownsItems(false) {}
+    DoubleListElement<T>* getBackPtr() { return back; }
+    const DoubleListElement<T>* getBackPtr() const { return back; }
 
-    DoubleLinkedChain& operator=(const DoubleLinkedList& l)
+    bool adoptList(DoubleLinkedList<T>& l)
     {
-        if (&other != this)
-        {
-            if (ownsItems)
-                clean();
-
-            front = l.front;
-            back = l.back;
-            ownsItems = false;
-        }
-
-        return *this;
+        front = l.front;
+        back = l.back;
+        l.front = NULL;
+        l.back = NULL;
     }
 
-    ~DoubleLinkedChain()
+    bool attachAtBegin(DoubleLinkedList<T>& l, const I& it)
     {
         if (ownsItems)
             clean();
