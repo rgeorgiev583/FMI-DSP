@@ -76,18 +76,47 @@ public:
             return false;
     }
 
-    void attachAtPrev(const I& it, const I& prev)
+    bool attachAtPrev(DoubleLinkedList<T>& l, const I& it)
     {
-        if (it && prev && !it.ptr->prev)
-            it.ptr->prev = prev.ptr;
+        if (it && l.front && !l.front->prev)
+        {
+            l.front->prev = it.ptr;
+
+            if (it.ptr == back)
+            {
+                back->next = l.front.ptr;
+
+                I end = back;
+                while (end && end.ptr->next)
+                    end++;
+                back = end.ptr;
+            }
+
+            return true;
+        }
+        else
+            return false;
     }
 
-    void attachAtNext(const I& it, const I& next)
+    void attachAtNext(DoubleLinkedList<T>& l, const I& it)
     {
-        if (it && next && !it.ptr->next)
-            it.ptr->next = next.ptr;
+        if (it && l.back && !l.back->next)
+        {
+            l.back->next = it.ptr;
+
+            if (it.ptr == front)
+            {
+                front->back = l.back.ptr;
+
+                I begin = front;
+                while (begin && begin.ptr->back)
+                    begin--;
+                front = begin.ptr;
+            }
+
+            return true;
+        }
+        else
+            return false;
     }
-
-
-
 };
