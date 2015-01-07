@@ -76,7 +76,7 @@ public:
             return false;
     }
 
-    bool attachAtPrev(DoubleLinkedList<T>& l, I& it)
+    bool attachListAtFront(DoubleLinkedList<T>& l, I& it)
     {
         if (it && l.front && !l.front->prev)
         {
@@ -98,7 +98,7 @@ public:
             return false;
     }
 
-    void attachAtNext(DoubleLinkedList<T>& l, I& it)
+    void attachListAtBack(DoubleLinkedList<T>& l, I& it)
     {
         if (it && l.back && !l.back->next)
         {
