@@ -8,8 +8,8 @@ class DoubleLinkedChain : public DoubleLinkedList<T>
 public:
     DoubleLinkedChain(): front(NULL), back(NULL) {}
 
-    DoubleLinkedChain(const DoubleLinkedList& l): front(l.front), back(l.back),
-            ownsItems(false) {}
+    DoubleLinkedChain(const DoubleLinkedList& l):
+            front(l.front), back(l.back), ownsItems(false) {}
 
     DoubleLinkedChain& operator=(const DoubleLinkedList& l)
     {
@@ -32,15 +32,44 @@ public:
             clean();
     }
 
-    void attachNext(const I& cur, const I& next)
+    void attachAtBegin(const I& it)
     {
-        if (cur.ptr && !cur.ptr->next)
-            cur.ptr->next = next.ptr;
+        if (it && front)
+        {
+            front->prev = it.ptr;
+
+            I begin = front;
+            while (begin)
+                begin--;
+            front = begin.ptr;
+        }
     }
 
-    void attachPrev(const I& cur, const I& prev)
+    void attachAtEnd(const I& it)
     {
-        if (cur.ptr && !cur.ptr->prev)
-            cur.ptr->prev = prev.ptr;
+        if (it && back)
+        {
+            back->next = it.ptr;
+
+            I end = back;
+            while (end)
+                end++;
+            back = end.ptr;
+        }
     }
+
+    void attachAtPrev(const I& it, const I& prev)
+    {
+        if (it && prev && !it.ptr->prev)
+            it.ptr->prev = prev.ptr;
+    }
+
+    void attachAtNext(const I& it, const I& next)
+    {
+        if (it && next && !it.ptr->next)
+            it.ptr->next = next.ptr;
+    }
+
+
+
 };
