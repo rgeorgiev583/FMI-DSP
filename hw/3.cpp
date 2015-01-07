@@ -1,7 +1,7 @@
 #include "dllist.cpp"
 
 template <typename T>
-DoubleLinkedList<T> join_at(const DoubleLinkedList<T>& L1,
+DoubleLinkedList<T> join_at(DoubleLinkedList<T> L1,
         const DoubleLinkedList<T>& L2,
         const DoubleLinkedListIterator<T>& M1,
         const DoubleLinkedListIterator<T>& M2)
