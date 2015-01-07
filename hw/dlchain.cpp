@@ -20,34 +20,60 @@ public:
 
     bool attachAtBegin(DoubleLinkedList<T>& l, const I& it)
     {
-        if (ownsItems)
-            clean();
+        if (it)
+        {
+            if (front)
+            {
+                front->prev = it.ptr;
+                if (it.ptr == l.back)
+                    it.ptr->next = front;
+
+                I begin = front;
+                while (begin && begin.ptr->back)
+                    begin--;
+                front = begin.ptr;
+            }
+            else
+            {
+                front = l.front;
+                back = l.back;
+            }
+
+            l.front = NULL;
+            l.back = NULL;
+            return true;
+        }
+        else
+            return false;
     }
 
-    void attachAtBegin(const I& it)
+    bool attachAtEnd(DoubleLinkedList<T>& l, const I& it)
     {
-        if (it && front)
+        if (it)
         {
-            front->prev = it.ptr;
+            if (back)
+            {
+                back->next = it.ptr;
+                if (it.ptr == l.front)
+                    it.ptr->prev = back;
 
-            I begin = front;
-            while (begin)
-                begin--;
-            front = begin.ptr;
+                I end = back;
+                while (end && end.ptr->next)
+                    end++;
+                back = end.ptr;
+            }
+            else
+            {
+                front = l.front;
+                back = l.back;
+            }
+
+            l.front = NULL;
+            l.back = NULL;
+            return true;
         }
-    }
-
-    void attachAtEnd(const I& it)
-    {
-        if (it && back)
-        {
-            back->next = it.ptr;
-
-            I end = back;
-            while (end)
-                end++;
-            back = end.ptr;
-        }
+        else
+            return false;
     }
 
     void attachAtPrev(const I& it, const I& prev)
