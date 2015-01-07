@@ -3,8 +3,6 @@
 template <typename T>
 class DoubleLinkedChain : public DoubleLinkedList<T>
 {
-    bool ownsItems = true;
-
 public:
     DoubleLinkedChain(): front(NULL), back(NULL) {}
 
