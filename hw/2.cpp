@@ -20,27 +20,26 @@ int main()
             s.push(input);
             ends = false;
         }
-        else
+        else if (!ends)
         {
             qs.push(s);
             destroy(s);
-
-            if (!ends)
-                ends = true;
-            else
-                endq = true;
+            ends = true;
         }
+        else
+            endq = true;
     }
     while (!endq);
 
-    size_t t = 0;
+    size_t t = 0, i = 1;
 
-    while (!qs.empty())
+    do
     {
         cout << "***********" << endl;
         cout << t << " минута:" << endl;
 
-        size_t i = 0;
+        if (qs.empty())
+            cout << "Няма повече келнери" << endl;
 
         while (!qs.empty() && s.size() < 15)
         {
@@ -51,16 +50,19 @@ int main()
         }
 
         size_t nt = 0, nf = 0;
-
+    
         while (!s.empty() && nt < 7)
         {
             bool c = s.top();
             c ? nt++ : nf++;
             s.pop();
         }
-    
+
         cout << nt << " измити чинии" << endl;
         cout << nf << " счупени чинии" << endl;
         t++;
     }
+    while (!s.empty());
+
+    return 0;
 }
