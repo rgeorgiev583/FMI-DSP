@@ -98,7 +98,7 @@ public:
             return false;
     }
 
-    void attachListAtBack(DoubleLinkedList<T>& l, I& it)
+    bool attachListAtBack(DoubleLinkedList<T>& l, I& it)
     {
         if (it && l.back && !l.back->next)
         {
