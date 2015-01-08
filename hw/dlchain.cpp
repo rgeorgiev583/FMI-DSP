@@ -6,13 +6,10 @@ class DoubleLinkedChain : public DoubleLinkedList<T>
 protected:
     void copy(const DoubleLinkedChain<T>& other)
     {
-        DoubleListElement<T> *pFront = other.getFrontPtr(),
-                             *pBack  = other.getBackPtr();
-
-        if (!pFront || !pBack)
+        if (!other.front || !other.back)
             return;
         
-        DoubleListElement<T> *pn = pFront->prev;
+        DoubleListElement<T> *pFront = other.front, *pn = pFront->prev;
         DoubleLinkedList<T> lFront;
 
         while (pFront && pFront->prev == pn)
@@ -24,6 +21,7 @@ protected:
 
         if (pFront)
         {
+            DoubleListElement<T> *pBack = other.back;
             pn = pBack->next;
             DoubleLinkedList<T> lBack;
 
@@ -226,5 +224,74 @@ public:
         }
         else
             return false;
+    }
+
+    bool join_at(DoubleLinkedList<T>& L1, DoubleLinkedList<T>& L2, I& M1, I& M2)
+    {
+        return adoptList(L1) && attachListAtFront(L2, M1) &&
+                                attachAtEnd(L2, M2);
+    }
+
+    bool join(DoubleLinkedList<T>& L1, DoubleLinkedList<T>& L2)
+    {
+        I itL1 = L1.begin(), itL2 = L2.end(), M1, M2;
+
+        while (itL1 && itL2)
+        {
+            if (*itL1 == *itL2 && (!M1 || *itL1 > *M1))
+            {
+                M1 = itL1;
+                M2 = itL2;
+            }
+
+            itL1++;
+            itL2--;
+        }
+
+        itL1 = L1.end();
+        itL2 = L2.begin();
+
+        while (itL1 && itL2)
+        {
+            if (*itL1 == *itL2 && (!M1 || *itL1 > *M1))
+            {
+                M1 = itL1;
+                M2 = itL2;
+            }
+
+            itL1--;
+            itL2++;
+        }
+
+        return join_at(L1, L2, M1, M2);
+    }
+
+    T sum()
+    {
+        T S = T();
+
+        if (!front || !back)
+            return S;
+
+        DoubleListElement<T> *pFront = front, *pn = pFront->prev;
+
+        while (pFront && pFront->prev == pn)
+        {
+            S += pFront->data;
+            pn = pFront;
+            pFront = pFront->next;
+        }
+        
+        DoubleListElement<T> *pBack = back;
+        pn = pBack->next;
+
+        while (pBack && pBack->next == pn)
+        {
+            S += pBack->data;
+            pn = pBack;
+            pBack = pBack->prev;
+        }
+
+        return S;
     }
 };
