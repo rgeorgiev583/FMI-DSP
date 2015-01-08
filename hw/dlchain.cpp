@@ -266,7 +266,32 @@ public:
         return join_at(L1, L2, M1, M2);
     }
 
-    T sum()
+    bool isJoined() const
+    {
+        if (!front || !back)
+            return false;
+
+        DoubleListElement<T> *pFront = front, *pn = pFront->prev;
+
+        while (pFront && pFront->prev == pn)
+        {
+            pn = pFront;
+            pFront = pFront->next;
+        }
+       
+        DoubleListElement<T> *pBack = back;
+        pn = pBack->next;
+
+        while (pBack && pBack->next == pn)
+        {
+            pn = pBack;
+            pBack = pBack->prev;
+        }
+
+        return pFront && pBack;
+    }
+
+    T sum() const
     {
         T S = T();
 
@@ -281,15 +306,18 @@ public:
             pn = pFront;
             pFront = pFront->next;
         }
-        
-        DoubleListElement<T> *pBack = back;
-        pn = pBack->next;
-
-        while (pBack && pBack->next == pn)
+       
+        if (pFront)
         {
-            S += pBack->data;
-            pn = pBack;
-            pBack = pBack->prev;
+            DoubleListElement<T> *pBack = back;
+            pn = pBack->next;
+
+            while (pBack && pBack->next == pn)
+            {
+                S += pBack->data;
+                pn = pBack;
+                pBack = pBack->prev;
+            }
         }
 
         return S;
