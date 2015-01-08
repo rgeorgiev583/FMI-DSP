@@ -1,20 +1,22 @@
-CC := g++
+CC := gcc
 CFLAGS := -I.
 SRCS := $(wildcard *.cpp)
 OBJS := $(SRCS:.cpp=.o)
-BINS := 1 2
+BINS := 1 2 3-test
 
 all: $(BINS)
 
 debug: CFLAGS += -g
 debug: $(BINS)
 
-define EXEC
+define MAKE_EXEC
 
-$(1): $(OBJS)
-	$(CC) $^ -o $@ $(CFLAGS)
+$1: $$(CFLAGS)
+	$$(CC) $$@.o -o $$@ $$(CFLAGS)
 
 endef
+
+$(foreach bin,$(BINS),$(eval $(call MAKE_EXEC,$(bin))))
 
 %.o: %.cpp
 	$(CC) -c $< -o $@ $(CFLAGS)
