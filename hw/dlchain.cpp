@@ -3,7 +3,114 @@
 template <typename T>
 class DoubleLinkedChain : public DoubleLinkedList<T>
 {
+protected:
+    void copy(const DoubleLinkedChain<T>& other)
+    {
+        DoubleListElement<T> *pFront = other.getFrontPtr(),
+                             *pBack  = other.getBackPtr();
+
+        if (!pFront || !pBack)
+            return;
+        
+        DoubleListElement<T> *pn = pFront->prev;
+        DoubleLinkedList<T> lFront;
+
+        while (pFront && pFront->prev == pn)
+        {
+            lFront.insertEnd(pFront->data);
+            pn = pFront;
+            pFront = pFront->next;
+        }
+
+        if (pFront)
+        {
+            pn = pBack->next;
+            DoubleLinkedList<T> lBack;
+
+            while (pBack && pBack->next == pn)
+            {
+                lBack.insertBegin(pBack->data);
+                pn = pBack;
+                pBack = pBack->prev;
+            }
+
+            lFront.back->next = pFront;
+            lBack.front->prev = pBack;
+            front = lFront.front;
+            back = lBack.back;
+            lBack.back = lBack.front = NULL;
+        }
+        else
+        {
+            front = lFront.front;
+            back = lFront.back;
+        }
+
+        lFront.back = lFront.front = NULL;
+    }
+
 public:
+    void clear()
+    {
+        if (!front || !back)
+            return;
+
+        DoubleListElement<T> *pFront = front, *prev = pFront->prev;
+
+        while (pFront && pFront->prev == prev)
+        {
+            prev = pFront;
+            pFront = pFront->next;
+        }
+
+        prev->next = NULL;
+
+        DoubleListElement<T> *pBack = back, *next = pBack->next;
+
+        while (pBack && pBack->next == next)
+        {
+            next = pBack;
+            pBack = pBack->prev;
+        }
+
+        next->prev = NULL;
+
+        DoubleLinkedList<T> lFront, lBack;
+        lFront.front = front;
+        lFront.back = prev;
+        
+        if (front != next && prev != back)
+        {
+            lBack.front = next;
+            lBack.back = back;
+        }
+
+        back = front = NULL;
+    }
+
+    DoubleLinkedChain(): front(NULL), back(NULL) {}
+
+    DoubleLinkedChain(const DoubleLinkedChain& other)
+    {
+        copy(other);
+    }
+
+    DoubleLinkedChain& operator=(const DoubleLinkedChain& other)
+    {
+        if (&other != this)
+        {
+            clear();
+            copy(other);
+        }
+
+        return *this;
+    }
+
+    ~DoubleLinkedChain()
+    {
+        clear();
+    }
+
     DoubleListElement<T>* getFrontPtr() { return front; }
     const DoubleListElement<T>* getFrontPtr() const { return front; }
 
@@ -12,6 +119,7 @@ public:
 
     bool adoptList(DoubleLinkedList<T>& l)
     {
+        clear();
         front = l.front;
         back = l.back;
         l.front = NULL;
