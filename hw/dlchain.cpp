@@ -9,7 +9,7 @@ protected:
     {
         if (!other.front || !other.back)
             return;
-        
+
         DoubleListElement<T> *pFront = other.front, *pn = pFront->prev;
         DoubleLinkedList<T> lFront;
 
@@ -35,14 +35,14 @@ protected:
 
             lFront.back->next = pFront;
             lBack.front->prev = pBack;
-            front = lFront.front;
-            back = lBack.back;
+            this->front = lFront.front;
+            this->back = lBack.back;
             lBack.back = lBack.front = NULL;
         }
         else
         {
-            front = lFront.front;
-            back = lFront.back;
+            this->front = lFront.front;
+            this->back = lFront.back;
         }
 
         lFront.back = lFront.front = NULL;
@@ -51,10 +51,10 @@ protected:
 public:
     void clear()
     {
-        if (!front || !back)
+        if (!this->front || !this->back)
             return;
 
-        DoubleListElement<T> *pFront = front, *prev = pFront->prev;
+        DoubleListElement<T> *pFront = this->front, *prev = pFront->prev;
 
         while (pFront && pFront->prev == prev)
         {
@@ -64,7 +64,7 @@ public:
 
         prev->next = NULL;
 
-        DoubleListElement<T> *pBack = back, *next = pBack->next;
+        DoubleListElement<T> *pBack = this->back, *next = pBack->next;
 
         while (pBack && pBack->next == next)
         {
@@ -75,19 +75,23 @@ public:
         next->prev = NULL;
 
         DoubleLinkedList<T> lFront, lBack;
-        lFront.front = front;
+        lFront.front = this->front;
         lFront.back = prev;
         
-        if (front != next && prev != back)
+        if (this->front != next && prev != this->back)
         {
             lBack.front = next;
-            lBack.back = back;
+            lBack.back = this->back;
         }
 
-        back = front = NULL;
+        this->back = this->front = NULL;
     }
 
-    DoubleLinkedChain(): front(NULL), back(NULL) {}
+    DoubleLinkedChain()
+    {
+        this->front = NULL;
+        this->back = NULL;
+    }
 
     DoubleLinkedChain(const DoubleLinkedChain& other)
     {
@@ -110,17 +114,17 @@ public:
         clear();
     }
 
-    DoubleListElement<T>* getFrontPtr() { return front; }
-    const DoubleListElement<T>* getFrontPtr() const { return front; }
+    DoubleListElement<T>* getFrontPtr() { return this->front; }
+    const DoubleListElement<T>* getFrontPtr() const { return this->front; }
 
-    DoubleListElement<T>* getBackPtr() { return back; }
-    const DoubleListElement<T>* getBackPtr() const { return back; }
+    DoubleListElement<T>* getBackPtr() { return this->back; }
+    const DoubleListElement<T>* getBackPtr() const { return this->back; }
 
     bool adoptList(DoubleLinkedList<T>& l)
     {
         clear();
-        front = l.front;
-        back = l.back;
+        this->front = l.front;
+        this->back = l.back;
         l.front = NULL;
         l.back = NULL;
     }
@@ -129,11 +133,12 @@ public:
     {
         if (it)
         {
-            if (front)
+            if (this->front)
             {
-                front->prev = it.ptr;
+                this->front->prev = it.ptr;
+
                 if (it.ptr == l.back)
-                    it.ptr->next = front;
+                    it.ptr->next = this->front;
 
                 I begin = front;
                 while (begin && begin.ptr->back)
@@ -142,8 +147,8 @@ public:
             }
             else
             {
-                front = l.front;
-                back = l.back;
+                this->front = l.front;
+                this->back = l.back;
             }
 
             l.front = NULL;
@@ -158,11 +163,12 @@ public:
     {
         if (it)
         {
-            if (back)
+            if (this->back)
             {
-                back->next = it.ptr;
+                this->back->next = it.ptr;
+
                 if (it.ptr == l.front)
-                    it.ptr->prev = back;
+                    it.ptr->prev = this->back;
 
                 I end = back;
                 while (end && end.ptr->next)
@@ -171,8 +177,8 @@ public:
             }
             else
             {
-                front = l.front;
-                back = l.back;
+                this->front = l.front;
+                this->back = l.back;
             }
 
             l.front = NULL;
@@ -189,9 +195,9 @@ public:
         {
             l.front->prev = it.ptr;
 
-            if (it.ptr == back)
+            if (it.ptr == this->back)
             {
-                back->next = l.front.ptr;
+                this->back->next = l.front;
 
                 I end = back;
                 while (end && end.ptr->next)
@@ -211,9 +217,9 @@ public:
         {
             l.back->next = it.ptr;
 
-            if (it.ptr == front)
+            if (it.ptr == this->front)
             {
-                front->back = l.back.ptr;
+                this->front->back = l.back;
 
                 I begin = front;
                 while (begin && begin.ptr->back)
@@ -269,10 +275,10 @@ public:
 
     bool isJoined() const
     {
-        if (!front || !back)
+        if (!this->front || !this->back)
             return false;
 
-        DoubleListElement<T> *pFront = front, *pn = pFront->prev;
+        DoubleListElement<T> *pFront = this->front, *pn = pFront->prev;
 
         while (pFront && pFront->prev == pn)
         {
@@ -280,7 +286,7 @@ public:
             pFront = pFront->next;
         }
        
-        DoubleListElement<T> *pBack = back;
+        DoubleListElement<T> *pBack = this->back;
         pn = pBack->next;
 
         while (pBack && pBack->next == pn)
@@ -296,10 +302,10 @@ public:
     {
         T S = T();
 
-        if (!front || !back)
+        if (!this->front || !this->back)
             return S;
 
-        DoubleListElement<T> *pFront = front, *pn = pFront->prev;
+        DoubleListElement<T> *pFront = this->front, *pn = pFront->prev;
 
         while (pFront && pFront->prev == pn)
         {
@@ -310,7 +316,7 @@ public:
        
         if (pFront)
         {
-            DoubleListElement<T> *pBack = back;
+            DoubleListElement<T> *pBack = this->back;
             pn = pBack->next;
 
             while (pBack && pBack->next == pn)
