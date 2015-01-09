@@ -133,7 +133,7 @@ public:
         return true;
     }
 
-    bool attachAtBegin(DoubleLinkedList<T>& l, I& it)
+    bool attachAtBegin(DoubleLinkedList<T>& l, DoubleLinkedListIterator<T>& it)
     {
         if (it)
         {
@@ -163,7 +163,7 @@ public:
             return false;
     }
 
-    bool attachAtEnd(DoubleLinkedList<T>& l, I& it)
+    bool attachAtEnd(DoubleLinkedList<T>& l, DoubleLinkedListIterator<T>& it)
     {
         if (it)
         {
@@ -193,7 +193,7 @@ public:
             return false;
     }
 
-    bool attachListAtFront(DoubleLinkedList<T>& l, I& it)
+    bool attachListAtFront(DoubleLinkedList<T>& l, DoubleLinkedListIterator<T>& it)
     {
         if (it && l.front && !l.front->prev)
         {
@@ -215,7 +215,8 @@ public:
             return false;
     }
 
-    bool attachListAtBack(DoubleLinkedList<T>& l, I& it)
+    bool attachListAtBack(DoubleLinkedList<T>& l,
+            DoubleLinkedListIterator<T>& it)
     {
         if (it && l.back && !l.back->next)
         {
@@ -237,7 +238,8 @@ public:
             return false;
     }
 
-    bool join_at(DoubleLinkedList<T>& L1, DoubleLinkedList<T>& L2, I& M1, I& M2)
+    bool join_at(DoubleLinkedList<T>& L1, DoubleLinkedList<T>& L2,
+            DoubleLinkedListIterator<T>& M1, DoubleLinkedListIterator<T>& M2)
     {
         return adoptList(L1) && attachListAtFront(L2, M1) &&
                                 attachAtEnd(L2, M2);
@@ -245,7 +247,7 @@ public:
 
     bool join(DoubleLinkedList<T>& L1, DoubleLinkedList<T>& L2)
     {
-        I itL1 = L1.begin(), itL2 = L2.end(), M1, M2;
+        DoubleLinkedListIterator<T> itL1 = L1.begin(), itL2 = L2.end(), M1, M2;
 
         while (itL1 && itL2)
         {
