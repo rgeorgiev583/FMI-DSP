@@ -144,10 +144,8 @@ public:
                 if (it.ptr == l.back)
                     it.ptr->next = this->front;
 
-                I begin = front;
-                while (begin && begin.ptr->back)
-                    begin--;
-                front = begin.ptr;
+                while (this->front && this->front->prev)
+                    this->front = this->front->prev;
             }
             else
             {
@@ -174,10 +172,8 @@ public:
                 if (it.ptr == l.front)
                     it.ptr->prev = this->back;
 
-                I end = back;
-                while (end && end.ptr->next)
-                    end++;
-                back = end.ptr;
+                while (this->back && this->back->next)
+                    this->back = this->back->next;
             }
             else
             {
@@ -203,10 +199,8 @@ public:
             {
                 this->back->next = l.front;
 
-                I end = back;
-                while (end && end.ptr->next)
-                    end++;
-                back = end.ptr;
+                while (this->back && this->back->next)
+                    this->back = this->back->next;
             }
 
             return true;
@@ -226,10 +220,8 @@ public:
             {
                 this->front->back = l.back;
 
-                I begin = front;
-                while (begin && begin.ptr->back)
-                    begin--;
-                front = begin.ptr;
+                while (this->front && this->front->prev)
+                    this->front = this->front->prev;
             }
 
             return true;
