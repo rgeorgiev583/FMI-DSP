@@ -122,11 +122,15 @@ public:
 
     bool adoptList(DoubleLinkedList<T>& l)
     {
+        if (!l.front || !l.back)
+            return false;
+
         clear();
         this->front = l.front;
         this->back = l.back;
         l.front = NULL;
         l.back = NULL;
+        return true;
     }
 
     bool attachAtBegin(DoubleLinkedList<T>& l, I& it)
