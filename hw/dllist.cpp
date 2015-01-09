@@ -25,15 +25,19 @@ template <typename T>
 class DoubleLinkedList;
 
 template <typename T>
+class DoubleLinkedChain;
+
+template <typename T>
 class DoubleLinkedListIterator : public Iterator<T> {
-private:
+	friend class DoubleLinkedList<T>;
+    friend class DoubleLinkedChain<T>;
+
+protected:
 	DoubleListElement<T>* ptr;
 
-	friend class DoubleLinkedList<T>;
-
+public:
 	static T error;
 
-public:
 	DoubleLinkedListIterator(DoubleListElement<T>* _ptr = NULL) :
 		ptr(_ptr) {}
 
@@ -84,14 +88,14 @@ T DoubleLinkedListIterator<T>::error;
 
 template <typename T>
 class DoubleLinkedList : public List<T, DoubleLinkedListIterator<T> > {
-private:
 
-	typedef DoubleLinkedListIterator<T> I;
+    typedef DoubleLinkedListIterator<T> I;
+    friend class DoubleLinkedChain<T>;
 
+protected:
 	DoubleListElement<T> *front, *back;
 
 public:
-
 	DoubleLinkedList() : front(NULL), back(NULL) {}
 
 	DoubleLinkedList(DoubleLinkedList const& l) : front(NULL), back(NULL) {
