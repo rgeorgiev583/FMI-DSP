@@ -7,8 +7,8 @@ int main()
 {
     DoubleLinkedChain<int> ch;
     DoubleLinkedList<int> L1, L2;
-    int[] a1 = {1, 3, 5, 7, 9, 6};
-    int[] a2 = {3, 4, 8, 5, 7};
+    int a1[] = {1, 3, 5, 7, 9, 6};
+    int a2[] = {3, 4, 8, 5, 7};
 
     for (size_t i = 0; i < 5; i++)
     {
