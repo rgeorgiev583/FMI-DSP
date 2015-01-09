@@ -1,3 +1,4 @@
+#pragma once
 #include "dllist.cpp"
 #include "dlchain.cpp"
 

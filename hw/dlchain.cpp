@@ -1,3 +1,4 @@
+#pragma once
 #include "dllist.cpp"
 
 template <typename T>

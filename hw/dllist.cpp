@@ -5,6 +5,7 @@
  *      Author: trifon
  */
 
+#pragma once
 #include "list.h"
 #include <cstddef>
 
