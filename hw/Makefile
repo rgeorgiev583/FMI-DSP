@@ -1,7 +1,4 @@
 CC := g++
-CFLAGS := -I.
-SRCS := $(wildcard *.cpp)
-OBJS := $(SRCS:.cpp=.o)
 BINS := 1 2 3-test
 
 all: $(BINS)
@@ -11,15 +8,12 @@ debug: $(BINS)
 
 define MAKE_EXEC
 
-$1: $$(CFLAGS)
-	$$(CC) $$@.o -o $$@ $$(CFLAGS)
+$1: $1.cpp
+	$$(CC) $$< -o $$@ $$(CFLAGS)
 
 endef
 
 $(foreach bin,$(BINS),$(eval $(call MAKE_EXEC,$(bin))))
 
-%.o: %.cpp
-	$(CC) -c $< -o $@ $(CFLAGS)
-
 clean:
-	rm -f $(BINS) $(OBJS)
+	rm -f $(BINS)
