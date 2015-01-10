@@ -1,8 +1,9 @@
 /*
- * double_linked_list.cpp
+ * dllist.cpp (originally double_linked_list.cpp)
  *
  *  Created on: 9.12.2014 г.
  *      Author: trifon
+ * Contributor: radoslav
  */
 
 #pragma once
