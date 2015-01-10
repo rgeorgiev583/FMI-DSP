@@ -240,7 +240,7 @@ public:
     bool join(DoubleLinkedList<T>& L1, DoubleLinkedList<T>& L2)
     {
         DoubleLinkedListIterator<T> itL1 = L1.begin(), itL2 = L2.end(), M1, M2;
-
+        
         while (itL1 && itL2)
         {
             if (*itL1 == *itL2 && (!M1 || *itL1 > *M1))
