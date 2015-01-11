@@ -1,14 +1,112 @@
 /*
- * tree_examples.cpp
+ * exprtree.cpp (originally tree_examples.cpp)
  *
  *  Created on: 5.01.2015 г.
  *      Author: trifon
+ * Contributor: radoslav
  */
 
 #include "bintree.cpp"
 #include "lstack.cpp"
 
-typedef BinaryTree<int> BIntTree;
+class SElement
+{
+public:
+    virtual ~SElement() {}
+    virtual SElement* clone() = 0;
+
+    template <typename T>
+    virtual T& operator*() = 0;
+
+    template <typename T>
+    virtual T& get() = 0;
+};
+
+template <typename T>
+class SType : public SElement
+{
+public:
+    T data;
+
+    SType(const T& _data = T()): data(_data) {}
+
+    SType* clone()
+    {
+        return new SType(data);
+    }
+
+    T& operator*() { return data; }
+    T& get() { return data; }
+};
+
+class SBinaryTreeIterator : public BinaryTreeIterator<SElement*>
+{
+public:
+    template <typename T>
+	T& operator*()
+    {
+		return ptr->data->get();
+	}
+};
+
+class SBinaryTree : public BinaryTree<SElement*>
+{
+	void deleteNode(TreeNode<SElement*>* node) {
+		if (node != NULL) {
+            delete node->data;
+            deleteNode(node->left);
+			deleteNode(node->right);
+			delete node;
+		}
+	}
+
+	TreeNode<SElement*>* copyNode(TreeNode<SElement*>* src) {
+		if (src == NULL)
+			return NULL;
+		return new TreeNode<SElement*>(src->data->clone(),
+                            copyNode(src->left),
+                            copyNode(src->right));
+	}
+
+public:
+	SBinaryTree(): root(NULL) {}
+
+    template <typename T>
+	SBinaryTree(const T& data):
+            root(new TreeNode<SElement*>(new SType<T>(data))) {}
+
+    template <typename T>
+	SBinaryTree(const T& data, SBinaryTree& left, SBinaryTree& right)
+    {
+		root = new TreeNode<SElement*>(new SType<T>(data));
+		adoptLeft(left.root);
+		adoptRight(right.root);
+	}
+
+	SBinaryTree(const SBinaryTree& other): root(copyNode(other.root)) {}
+
+	SBinaryTree& operator=(const SBinaryTree& other)
+    {
+		if (&other != this)
+        {
+			deleteNode(root);
+			root = copyNode(other.root);
+		}
+
+		return *this;
+	}
+
+	~SBinaryTree()
+    {
+		deleteNode(root);
+	}
+};
+
+void createTree(LinkedStack<SBinaryTree>& rstack, char op) {
+	SBinaryTree rtree = rstack.pop();
+	SBinaryTree ltree = rstack.pop();
+	rstack.push(SBinaryTree(op, ltree, rtree));
+}
 
 int priority(char op) {
 	switch (op) {
@@ -16,23 +114,38 @@ int priority(char op) {
 	case '-':return 1;
 	case '*':
 	case '/':return 2;
+    case '^':return 3;
+
 	default:return -1;
 	}
 }
 
-void createTree(LinkedStack<BinaryTree<char> >& rstack, char op) {
-	BinaryTree<char> rtree = rstack.pop();
-	BinaryTree<char> ltree = rstack.pop();
-	rstack.push(BinaryTree<char>(op, ltree, rtree));
+int pow(int a, int n)
+{
+    if (a == 0)
+        return 0;
+    else if (a == 1 || n <= 0)
+        return 1;
+    else if (n % 2)
+        return a * pow(a, n - 1);
+    else
+    {
+        int b = pow(a, n / 2);
+        return b * b;
+    }
 }
 
-BinaryTree<char> createExpressionTree(char const* expr) {
+SBinaryTree createExpressionTree(char const* expr) {
 	LinkedStack<char> opstack;
-	LinkedStack<BinaryTree<char> > rstack;
+	LinkedStack<SBinaryTree> rstack;
 
 	while(*expr) {
-		if (*expr >= '0' && *expr <= '9')
-			rstack.push(BinaryTree<char>(*expr));
+		if (    *expr >= '0' && *expr <= '9' ||
+                *expr == '-' && *(expr + 1) >= '0' && *(expr + 1) <= '9'    )
+			rstack.push(SBinaryTree(atoi(*expr)));
+
+            while (*expr && *(expr + 1) >= '0' && *(expr + 1) <= '9')
+                expr++;
 		else
 		if (*expr == '(')
 			opstack.push(*expr);
@@ -61,7 +174,7 @@ BinaryTree<char> createExpressionTree(char const* expr) {
 	return rstack.pop();
 }
 
-double calculate(BinaryTreeIterator<char> it) {
+double calculate(SBinaryTreeIterator it) {
 	if (*it >= '0' && *it <= '9')
 		// листо
 		return *it - '0';
