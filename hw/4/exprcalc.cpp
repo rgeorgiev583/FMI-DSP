@@ -1,6 +1,7 @@
 #include "exprcalc.h"
 #include "lstack.cpp"
 #include <cstdlib>
+#include <sstream>
 
 int priority(char op)
 {
@@ -162,6 +163,26 @@ char* strsubst(char* str, char ch, int subst)
     }
 
     return str;
+}
+
+std::string& substitute(std::string& s, char ch, const std::string& subst)
+{
+    size_t pos = s.find(ch);
+
+    while (pos != std::string::npos)
+    {
+        s.replace(pos, 1, subst);
+        pos = s.find(ch, pos + 1);
+    }
+
+    return s;
+}
+
+std::string& interpolate(std::string& s, char ch, int arg)
+{
+    std::ostringstream argout;
+    argout << arg;
+    return substitute(s, ch, argout.str());
 }
 
 const char* find_token(const char* str)
