@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include "intfunction.h"
 
 using namespace std;
@@ -11,9 +12,14 @@ int main()
     cin.ignore();
 
     vector<IntFunction> fs;
+    string s;
+    getline(cin, s);
 
-    while (cin)
-        fs.push_back(IntFunction());
+    while (!cin.eof() && !s.empty())
+    {
+        fs.push_back(IntFunction(s));
+        getline(cin, s);
+    }
 
     vector<int> vals;
     size_t nfs = fs.size();
