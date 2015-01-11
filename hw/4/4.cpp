@@ -8,6 +8,7 @@ int main()
 {
     int a, b;
     cin >> a >> b; if (!cin) { return 1; }
+    cin.ignore();
 
     vector<IntFunction> fs;
 
