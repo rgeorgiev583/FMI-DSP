@@ -1,24 +1,44 @@
 #include <iostream>
-#include <vector>
+#include <fstream>
 #include <string>
+#include <vector>
 #include "intfunction.h"
 
 using namespace std;
 
-int main()
+int main(int argc, char** argv)
 {
+    istream* pin;
+
+    if (argc >= 2)
+    {
+        string filename(argv[1]);
+        ifstream fin(filename);
+        
+        if (!fin.is_open())
+        {
+            cout << "ERROR: Couldn't open file! Will now read from stdin.";
+            pin = &cin;
+        }
+        else
+            pin = &fin;
+    }
+    else
+        pin = &cin;
+
+    istream& in = *pin;
     int a, b;
-    cin >> a >> b; if (!cin) { return 1; }
-    cin.ignore();
+    in >> a >> b; if (!in) { return 1; }
+    in.ignore();
 
     vector<IntFunction> fs;
     string s;
-    getline(cin, s);
+    getline(in, s);
 
-    while (!cin.eof() && !s.empty())
+    while (!in.eof() && !s.empty())
     {
         fs.push_back(IntFunction(s));
-        getline(cin, s);
+        getline(in, s);
     }
 
     vector<int> vals;
