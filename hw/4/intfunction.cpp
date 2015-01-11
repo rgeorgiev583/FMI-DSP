@@ -99,11 +99,7 @@ IntFunction::~IntFunction()
 
 int IntFunction::calculate(int arg) const
 {
-    //char* expr_int = new char[MAX_SIZE];
-    //strcpy(expr_int, expr);
     std::string expr_int(expr);
     interpolate(expr_int, param, arg);
     return calculate_expr(expr_int.c_str());
-    //delete[] expr_int;
-    //return result;
 }
