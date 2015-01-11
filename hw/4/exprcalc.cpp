@@ -36,10 +36,10 @@ void apply_operation(LinkedStack<int>& rstack, char op)
 
 	switch (op)
     {
-        case '+': rstack.push(l + r);    break;
-        case '-': rstack.push(l - r);    break;
-        case '*': rstack.push(l * r);    break;
-        case '/': rstack.push(l / r);    break;
+        case '+': rstack.push(l + r);     break;
+        case '-': rstack.push(l - r);     break;
+        case '*': rstack.push(l * r);     break;
+        case '/': rstack.push(l / r);     break;
         case '^': rstack.push(ipow(l,r)); break;
 	}
 }
