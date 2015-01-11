@@ -8,25 +8,14 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    istream* pin;
+    ifstream fin;
 
     if (argc >= 2)
-    {
-        string filename(argv[1]);
-        ifstream fin(filename);
+        fin.open(argv[1]);
         
-        if (!fin.is_open())
-        {
-            cout << "ERROR: Couldn't open file! Will now read from stdin.";
-            pin = &cin;
-        }
-        else
-            pin = &fin;
-    }
-    else
-        pin = &cin;
-
+    istream* pin = fin.is_open() ? &fin : &cin;
     istream& in = *pin;
+
     int a, b;
     in >> a >> b; if (!in) { return 1; }
     in.ignore();
@@ -74,6 +63,9 @@ int main(int argc, char** argv)
 
         vals.clear();
     }
+
+    if (fin.is_open())
+        fin.close();
 
     return 0;
 }
