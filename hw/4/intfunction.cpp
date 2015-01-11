@@ -25,27 +25,32 @@ bool IntFunction::parse(const char* dfn)
     if (!i || !is_alpha(*i))
         return false;
     name = *i;
+    i++;
 
     // после извличаме '('
     i = find_token(i);
     if (!i || *i != '(')
         return false;
+    i++;
 
     // след това извличаме името на аргумента
     i = find_token(i);
     if (!i || !is_alpha(*i))
         return false;
     param = *i;
+    i++;
 
     // после извличаме ')'
     i = find_token(i);
     if (!i || *i != ')')
         return false;
+    i++;
 
     // след това извличаме '='
     i = find_token(i);
     if (!i || *i != '=')
         return false;
+    i++;
 
     // и накрая копираме израза в полето expr
     i = find_token(i);
