@@ -1,4 +1,4 @@
-#pragma once
+#include "exprcalc.h"
 #include "lstack.cpp"
 #include <cstdlib>
 
