@@ -190,7 +190,7 @@ const char* find_token(const char* str)
     if (!str)
         return NULL;
 
-    while (*str && *str == ' ' && *str == '\t')
+    while (*str && (*str == ' ' || *str == '\t'))
         str++;
 
     return *str && *str != ' ' && *str != '\t' ? str : NULL;
