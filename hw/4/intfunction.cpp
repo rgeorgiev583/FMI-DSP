@@ -1,5 +1,5 @@
 #include "intfunction.h"
-#include "exprcalc.cpp"
+#include "exprcalc.h"
 #include <cstring>
 
 const size_t MAX_SIZE = 1000;
