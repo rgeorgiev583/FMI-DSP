@@ -9,9 +9,13 @@ debug: CFLAGS += -g
 debug: $(BINS)
 
 ifeq ($(OS),Windows_NT)
-	BIN_EXT := .exe
+
+BIN_EXT := .exe
+
 else
-	BIN_EXT :=
+
+BIN_EXT :=
+
 endif
 
 define MAKE_BINS
