@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1418468139 source:/home/radoslav/uni/2-1/dsp/pkr/1/1-University/main.cpp
+	<iostream>
+	<fstream>
+	<cstring>
+

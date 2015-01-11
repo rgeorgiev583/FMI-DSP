@@ -1,0 +1,81 @@
+#include <iostream>
+#include <fstream>
+#include <cstring>
+using namespace std;
+
+struct teacher
+{
+    char name[100];
+    int subject;
+};
+
+struct subject
+{
+    char name[100];
+    int subject;
+};
+
+struct report
+{
+    char teachername[100];
+    char subjectname[100];
+    int subject;
+};
+
+int main()
+{
+    teacher t[1000];
+    subject s[1000];
+    report r;
+
+    size_t tn = 0, sn = 0;
+
+    ifstream fin1("data1.dat", std::ios::in);
+    if (!fin1.is_open())
+        return 1;
+
+    while (!fin1.eof())
+    {
+        cin.getline(t[tn].name, 100);
+        fin1 >> t[tn].subject;
+        tn++;
+    }
+
+    fin1.close();
+
+    ifstream fin2("data2.dat", std::ios::in);
+    if (!fin2.is_open())
+        return 1;
+
+    while (!fin2.eof())
+    {
+        fin2 >>  >> s[sn].subject;
+        sn++;
+    }
+
+    fin2.close();
+
+    ofstream fout("data.dat", std::ios::out);
+    if (!fout.is_open())
+        return 1;
+
+    for (size_t i = 0; i < tn; i++)
+    {
+        for (size_t j = 0; j < sn; j++)
+        {
+            if (t[i].subject == s[j].subject && strstr(t[i].name, "Иванов"))
+            {
+                strcpy(r.teachername, t[i].name);
+                strcpy(r.subjectname, s[j].name);
+                r.subject = t[i].subject;
+
+                fout << r.teachername << '\t' << r.subjectname << '\t'
+                     << r.subject << endl;
+            }
+        }
+    }
+
+    fout.close();
+
+    return 0;
+}
