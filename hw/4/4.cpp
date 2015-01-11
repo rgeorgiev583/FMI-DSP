@@ -22,12 +22,30 @@ int main()
         for (size_t j = 0; j < nfs; j++)
             vals.push_back(fs[j].calculate(i));
 
+        bool eq = false;
+        size_t eqval;
+        vector<bool> eqs(nfs - 1, false);
+        
         for (size_t j = 0; j < nfs - 1; j++)
-            for (size_t k = j + 1; k < nfs; k++)
-                if (vals[j] == vals[k])
-                    cout << fs[j].getName() << '(' << i << ") = " <<
-                            fs[k].getName() << '(' << i << ") = " <<
-                            vals[j] << endl;
+            if (!j || !eqs[j - 1])
+                for (size_t k = j + 1; k < nfs; k++)
+                    if (vals[j] == vals[k])
+                    {
+                        if (!eq)
+                        {
+                            cout << fs[j].getName() << '(' << i << ") = ";
+                            eqval = vals[j];
+                            eq = true;
+                        }
+
+                        cout     << fs[k].getName() << '(' << i << ") = ";
+                        eqs[k - 1] = true;
+                    }
+
+        if (eq)
+            cout << eqval << endl;
+
+        vals.clear();
     }
 
     return 0;
