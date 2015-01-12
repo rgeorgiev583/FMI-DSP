@@ -1,4 +1,6 @@
 #include <iostream>
+#include "dllist.cpp"
+#include "dlchain.cpp"
 #include "3.cpp"
 
 using namespace std;
