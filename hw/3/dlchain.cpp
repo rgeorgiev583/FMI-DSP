@@ -189,7 +189,8 @@ public:
             return false;
     }
 
-    bool attachListAtFront(DoubleLinkedList<T>& l, DoubleLinkedListIterator<T>& it)
+    bool attachListAtFront(DoubleLinkedList<T>& l,
+                           DoubleLinkedListIterator<T>& it)
     {
         if (it && l.front && !l.front->prev)
         {
