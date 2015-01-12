@@ -61,7 +61,7 @@ bool IntFunction::parse(const char* dfn)
 
 IntFunction::IntFunction(std::istream& in)
 {
-    string strin;
+    std::string strin;
     getline(in, strin);
     parse(strin.c_str());
 }
