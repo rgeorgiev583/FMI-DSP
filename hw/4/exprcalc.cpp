@@ -1,6 +1,7 @@
 #include "exprcalc.h"
 #include "lstack.cpp"
 #include <cstdlib>
+#include <string>
 #include <sstream>
 
 int priority(char op)

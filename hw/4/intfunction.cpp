@@ -1,8 +1,8 @@
 #include "intfunction.h"
 #include "exprcalc.h"
 #include <cstring>
-
-const size_t MAX_SIZE = 1000;
+#include <iostream>
+#include <string>
 
 void IntFunction::copy(const IntFunction& other)
 {
