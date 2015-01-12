@@ -1,5 +1,6 @@
 #include <iostream>
 #include "stack.cpp"
+#include <stack>
 #include <queue>
 
 using namespace std;
